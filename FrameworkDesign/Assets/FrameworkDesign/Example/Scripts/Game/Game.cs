@@ -1,7 +1,8 @@
 ﻿using System;
+using FrameworkDesign.Example.Scripts.Event;
 using UnityEngine;
 
-namespace FrameworkDesign.Example
+namespace FrameworkDesign.Example.Scripts.Game
 {
     public class Game : MonoBehaviour
     {

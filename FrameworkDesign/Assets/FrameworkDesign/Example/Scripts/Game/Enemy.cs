@@ -1,8 +1,7 @@
- using System.Collections;
-using System.Collections.Generic;
+using FrameworkDesign.Example.Scripts.Event;
 using UnityEngine;
 
-namespace FrameworkDesign.Example
+namespace FrameworkDesign.Example.Scripts.Game
 {
     public class Enemy : MonoBehaviour
     {

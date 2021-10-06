@@ -1,25 +1,25 @@
 ﻿using System;
 using UnityEngine;
 
-namespace FrameworkDesign.Example
+namespace FrameworkDesign.Example.Scripts.Event
 {
-    public class GamePassEvent : MonoBehaviour
+    public static class GamePassEvent
     {
-        private static Action mOnevent;
+        private static Action mOnEvent;
 
         public static void Register(Action onEvent)
         {
-            mOnevent += onEvent;
+            mOnEvent += onEvent;
         }
 
         public static void Unregister(Action onEvent)
         {
-            mOnevent -= onEvent;
+            mOnEvent -= onEvent;
         }
 
         public static void Trigger()
         {
-            mOnevent?.Invoke();
+            mOnEvent?.Invoke();
         }
     }
 }

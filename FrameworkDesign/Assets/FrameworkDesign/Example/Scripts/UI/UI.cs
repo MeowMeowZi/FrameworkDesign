@@ -1,11 +1,12 @@
 ﻿using System;
+using FrameworkDesign.Example.Scripts.Event;
 using UnityEngine;
 
-namespace FrameworkDesign.Example
+namespace FrameworkDesign.Example.Scripts.UI
 {
     public class UI : MonoBehaviour
     {
-        private void Start()
+        private void Awake()
         {
             GamePassEvent.Register(OnGamePass);
         }

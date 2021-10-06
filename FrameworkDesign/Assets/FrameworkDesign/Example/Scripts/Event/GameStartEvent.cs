@@ -1,6 +1,6 @@
 using System;
 
-namespace FrameworkDesign.Example
+namespace FrameworkDesign.Example.Scripts.Event
 {
     public static class GameStartEvent
     {
