@@ -1,25 +1,10 @@
 ﻿using System;
-using UnityEngine;
+using FrameworkDesign.Framework.Event;
 
 namespace FrameworkDesign.Example.Scripts.Event
 {
-    public static class GamePassEvent
+    public abstract class GamePassEvent : Event<GamePassEvent>
     {
-        private static Action mOnEvent;
-
-        public static void Register(Action onEvent)
-        {
-            mOnEvent += onEvent;
-        }
-
-        public static void Unregister(Action onEvent)
-        {
-            mOnEvent -= onEvent;
-        }
-
-        public static void Trigger()
-        {
-            mOnEvent?.Invoke();
-        }
+        
     }
 }

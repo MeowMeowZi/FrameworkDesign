@@ -18,7 +18,7 @@ namespace FrameworkDesign.Example.Scripts.UI
 
         private void OnDestroy()
         {
-            GamePassEvent.Unregister(OnGamePass);
+            GamePassEvent.UnRegister(OnGamePass);
         }
     }
 }

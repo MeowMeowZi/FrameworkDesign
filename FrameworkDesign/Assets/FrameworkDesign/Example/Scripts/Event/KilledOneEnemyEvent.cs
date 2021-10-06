@@ -1,10 +1,9 @@
-﻿using System;
 using FrameworkDesign.Framework.Event;
 
 namespace FrameworkDesign.Example.Scripts.Event
 {
-    public abstract class GameStartEvent : Event<GameStartEvent>
+    public abstract class KilledOneEnemyEvent : Event<KilledOneEnemyEvent>
     {
-       
+        
     }
 }
