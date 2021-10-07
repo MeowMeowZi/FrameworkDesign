@@ -1,17 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using FrameworkDesign.Framework.BindableProperty;
 
 namespace FrameworkDesign.Example.Scripts.Model
 {
-    public class GameModel : MonoBehaviour
+    public class GameModel
     {
-        public static int KillCount = 0;
+        public BindableProperty<int> KillCount = new BindableProperty<int>()
+        {
+            Value = 0
+        };
 
-        public static int Gold = 0;
+        public BindableProperty<int> Gold = new BindableProperty<int>()
+        {
+            Value = 0
+        };
 
-        public static int Score = 0;
+        public BindableProperty<int> Score = new BindableProperty<int>()
+        {
+            Value = 0
+        };
 
-        public static int BaseScore = 0;
+        public BindableProperty<int> BaseScore = new BindableProperty<int>()
+        {
+            Value = 0
+        };
     }
 }

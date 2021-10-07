@@ -1,31 +1,34 @@
-using System;
-using FrameworkDesign.Framework.BindableProperty;
-using FrameworkDesign.Framework.Event;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CountAPP.Scripts
+namespace CountApp.Scripts
 {
     public class CounterViewController : MonoBehaviour
     {
+        private CountModel mCountModel;
+        
         private void Start()
         {
+            mCountModel = CountApp.Get<CountModel>();
+            
             // 添加委托
-            CountModel.Count.OnValueChanged += OnCountChanged;
+            mCountModel.Count.OnValueChanged += OnCountChanged;
             
             // 表现逻辑 -- 初始化
-            CountModel.Count.OnValueChanged?.Invoke(CountModel.Count.Value);
+            mCountModel.Count.OnValueChanged?.Invoke(mCountModel.Count.Value);
             
             transform.Find("AddButton").GetComponent<Button>().onClick.AddListener((() =>
             {
                 // 交互逻辑
-                CountModel.Count.Value++;
+                new AddCountCommand()
+                    .Execute();
             }));
             
             transform.Find("SubButton").GetComponent<Button>().onClick.AddListener((() =>
             {
                 // 交互逻辑
-                CountModel.Count.Value--;
+                new SubCountCommand()
+                    .Execute();
             }));
         }
 
@@ -37,15 +40,9 @@ namespace CountAPP.Scripts
 
         private void OnDestroy()
         {
-            CountModel.Count.OnValueChanged -= OnCountChanged;
+            mCountModel.Count.OnValueChanged -= OnCountChanged;
+
+            mCountModel = null;
         }
-    }
-    
-    public class CountModel : Event<CountModel>
-    {
-        public static BindableProperty<int> Count = new BindableProperty<int>()
-        {
-            Value = 0
-        };
     }
 }

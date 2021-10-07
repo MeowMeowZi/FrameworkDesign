@@ -1,6 +1,12 @@
-﻿using FrameworkDesign.Framework.Event;
+﻿using FrameworkDesign.Framework.BindableProperty;
 
-namespace CountAPP.Scripts
+namespace CountApp.Scripts
 {
-    
+    public class CountModel
+    {
+        public BindableProperty<int> Count = new BindableProperty<int>()
+        {
+            Value = 0
+        };
+    }
 }

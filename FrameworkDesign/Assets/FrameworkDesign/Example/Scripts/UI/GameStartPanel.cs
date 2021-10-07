@@ -1,3 +1,4 @@
+using FrameworkDesign.Example.Scripts.Command;
 using FrameworkDesign.Example.Scripts.Event;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,8 @@ namespace FrameworkDesign.Example.Scripts.UI
             transform.Find("BtnStart").GetComponent<Button>().onClick.AddListener((() =>
             {
                 gameObject.SetActive(false);
-                GameStartEvent.Trigger();
+                new GameStartCommand()
+                    .Execute();
             }));
         }
 
