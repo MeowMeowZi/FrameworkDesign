@@ -1,3 +1,4 @@
+using FrameworkDesign.Framework.BindableProperty;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,11 +6,11 @@ namespace CountApp.Scripts
 {
     public class CounterViewController : MonoBehaviour
     {
-        private CountModel mCountModel;
+        private ICountModel mCountModel;
         
         private void Start()
         {
-            mCountModel = CountApp.Get<CountModel>();
+            mCountModel = CountApp.Get<ICountModel>();
             
             // 添加委托
             mCountModel.Count.OnValueChanged += OnCountChanged;

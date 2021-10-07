@@ -11,15 +11,20 @@ namespace FrameworkDesign.Example.IOC
         {
             var container = new IOCContainer();
 
-            container.Register(new BlueToothManager());
+            container.Register<IBlueToothManager>(new BlueToothManager());
 
-            var blueToothManager = container.Get<BlueToothManager>();
+            var blueToothManager = container.Get<IBlueToothManager>();
             
             blueToothManager.Connect();
         }
     }
 
-    public class BlueToothManager
+    public interface IBlueToothManager
+    {
+        void Connect();
+    }
+    
+    public class BlueToothManager : IBlueToothManager
     {
         public void Connect()
         {

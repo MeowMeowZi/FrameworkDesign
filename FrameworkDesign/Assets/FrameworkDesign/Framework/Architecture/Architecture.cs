@@ -2,7 +2,12 @@
 
 namespace FrameworkDesign.Framework.Architecture
 {
-    public abstract class Architecture<T> where T : Architecture<T>, new()
+    public interface IArchitecture
+    {
+        T GetUtility<T>() where T : class;
+    }
+    
+    public abstract class Architecture<T> : IArchitecture where T : Architecture<T>, new()
     {
         private static T mArchitecture;
 
@@ -31,6 +36,17 @@ namespace FrameworkDesign.Framework.Architecture
             MakeSureArchitecture();
             
             mArchitecture.mContainer.Register<T>(instance);
+        }
+
+        public void RegisterModel<T>(T model) where T : IBelongToArchitecture
+        {
+            model.Architecture = this;
+            mContainer.Register<T>(model);
+        }
+
+        public T GetUtility<T>() where T : class
+        {
+            return mContainer.Get<T>();
         }
     }
 }

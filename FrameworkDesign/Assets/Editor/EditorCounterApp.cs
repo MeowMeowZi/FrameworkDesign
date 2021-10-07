@@ -25,7 +25,7 @@ namespace Editor
                     .Execute();
             }
 
-            // GUILayout.Label(CountModel.Instance.Count.Value.ToString());
+            GUILayout.Label(CountApp.Scripts.CountApp.Get<ICountModel>().Count.Value.ToString());
             
             if (GUILayout.Button("-"))
             {

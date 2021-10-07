@@ -2,24 +2,35 @@ using FrameworkDesign.Framework.BindableProperty;
 
 namespace FrameworkDesign.Example.Scripts.Model
 {
-    public class GameModel
+    public interface IGameModel
     {
-        public BindableProperty<int> KillCount = new BindableProperty<int>()
+        BindableProperty<int> KillCount { get; }
+
+        BindableProperty<int> Gold { get; }
+
+        BindableProperty<int> Score { get; }
+
+        BindableProperty<int> BaseScore { get; }
+    }
+    
+    public class GameModel : IGameModel
+    {
+        public BindableProperty<int> KillCount { get; } = new BindableProperty<int>()
         {
             Value = 0
         };
 
-        public BindableProperty<int> Gold = new BindableProperty<int>()
+        public BindableProperty<int> Gold { get; } = new BindableProperty<int>()
         {
             Value = 0
         };
 
-        public BindableProperty<int> Score = new BindableProperty<int>()
+        public BindableProperty<int> Score { get; } = new BindableProperty<int>()
         {
             Value = 0
         };
 
-        public BindableProperty<int> BaseScore = new BindableProperty<int>()
+        public BindableProperty<int> BaseScore { get; } = new BindableProperty<int>()
         {
             Value = 0
         };

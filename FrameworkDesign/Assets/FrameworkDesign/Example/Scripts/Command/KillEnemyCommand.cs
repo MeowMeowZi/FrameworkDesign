@@ -9,7 +9,7 @@ namespace FrameworkDesign.Example.Scripts.Command
     {
         public void Execute()
         {
-            var gameModel = PointGame.PointGame.Get<GameModel>();
+            var gameModel = PointGame.PointGame.Get<IGameModel>();
             
             gameModel.KillCount.Value++;
 

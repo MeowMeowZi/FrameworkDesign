@@ -1,5 +1,4 @@
 ﻿using FrameworkDesign.Framework.Architecture;
-using FrameworkDesign.Framework.IOC;
 
 namespace CountApp.Scripts
 {
@@ -7,7 +6,8 @@ namespace CountApp.Scripts
     {
         protected override void Init()
         {
-            Register(new CountModel());
+            RegisterModel<ICountModel>(new CountModel());
+            Register<IStorage>(new PlayerPresStorage());
         }
     }
 }

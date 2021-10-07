@@ -6,7 +6,7 @@ namespace CountApp.Scripts
     {
         public void Execute()
         {
-            CountApp.Get<CountModel>().Count.Value--;
+            CountApp.Get<ICountModel>().Count.Value--;
         }
     }
 }
