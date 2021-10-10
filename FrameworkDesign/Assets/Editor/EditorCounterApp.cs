@@ -1,4 +1,3 @@
-using System;
 using CountApp.Scripts;
 using UnityEditor;
 using UnityEngine;
@@ -10,6 +9,11 @@ namespace Editor
         [MenuItem("EditorCounterApp/Open")]
         static void Open()
         {
+            CountApp.Scripts.CountApp.OnRegisterPatch += app =>
+            {
+                app.RegisterUtility<IStorage>(new EditorPresStorage());
+            };
+            
             var editorCounterApp = GetWindow<EditorCounterApp>();
             editorCounterApp.name = nameof(EditorCounterApp);
             editorCounterApp.position = new Rect(100, 100, 400, 600);

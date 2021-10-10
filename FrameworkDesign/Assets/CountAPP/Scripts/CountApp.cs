@@ -7,7 +7,7 @@ namespace CountApp.Scripts
         protected override void Init()
         {
             RegisterModel<ICountModel>(new CountModel());
-            Register<IStorage>(new PlayerPresStorage());
+            RegisterUtility<IStorage>(new PlayerPresStorage());
         }
     }
 }

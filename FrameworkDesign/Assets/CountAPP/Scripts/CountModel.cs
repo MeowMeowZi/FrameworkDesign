@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace CountApp.Scripts
 {
-    public interface ICountModel : IBelongToArchitecture
+    public interface ICountModel : IModel
     {
         BindableProperty<int> Count { get; }
     }
     
     public class CountModel : ICountModel
     {
-        public CountModel()
+        public void Init()
         {
             var storage = Architecture.GetUtility<IStorage>();
 
-            storage.LoadInt("COUNTER_COUNT", 0);
+            Count.Value = storage.LoadInt("COUNTER_COUNT", 0);
 
             Count.OnValueChanged += count =>
             {
