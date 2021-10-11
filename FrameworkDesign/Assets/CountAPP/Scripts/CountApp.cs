@@ -6,6 +6,7 @@ namespace CountApp.Scripts
     {
         protected override void Init()
         {
+            RegisterSystem<ISystem>(new AchievementSystem());
             RegisterModel<ICountModel>(new CountModel());
             RegisterUtility<IStorage>(new PlayerPresStorage());
         }

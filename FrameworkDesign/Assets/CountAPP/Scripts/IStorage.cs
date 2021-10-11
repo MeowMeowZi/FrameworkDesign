@@ -1,11 +1,12 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
 #endif
+using FrameworkDesign.Framework.Architecture;
 using UnityEngine;
 
 namespace CountApp.Scripts
 {
-    public interface IStorage
+    public interface IStorage : IUtility
     {
         void SaveInt(string key, int value);
 

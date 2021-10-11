@@ -9,11 +9,11 @@ namespace CountApp.Scripts
         BindableProperty<int> Count { get; }
     }
     
-    public class CountModel : ICountModel
+    public class CountModel : AbstractModel, ICountModel
     {
-        public void Init()
+        protected override void OnInit()
         {
-            var storage = Architecture.GetUtility<IStorage>();
+            var storage = GetArchitecture().GetUtility<IStorage>();
 
             Count.Value = storage.LoadInt("COUNTER_COUNT", 0);
 
@@ -22,13 +22,11 @@ namespace CountApp.Scripts
                 storage.SaveInt("COUNTER_COUNT", count);
             };
         }
-        
+
         public BindableProperty<int> Count { get; } = new BindableProperty<int>()
         {
             Value = 0
         };
-
-        public IArchitecture Architecture { get; set; }
     }
     
     

@@ -1,12 +1,11 @@
-﻿namespace FrameworkDesign.Framework.Architecture
+namespace FrameworkDesign.Framework.Architecture
 {
-    public interface IModel : IBelongToArchitecture, ICanSetArchitecture
-
+    public interface ISystem : IBelongToArchitecture, ICanSetArchitecture
     {
-    void Init();
+        void Init();
     }
     
-    public abstract class AbstractModel : IModel
+    public abstract class AsbtractSystem : ISystem
     {
         private IArchitecture mArchitecture;
         
@@ -20,7 +19,7 @@
             mArchitecture = architecture;
         }
 
-        void IModel.Init()
+        void ISystem.Init()
         {
             OnInit();
         }

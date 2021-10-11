@@ -1,16 +1,17 @@
+using FrameworkDesign.Framework.Architecture;
 using FrameworkDesign.Framework.BindableProperty;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CountApp.Scripts
 {
-    public class CounterViewController : MonoBehaviour
+    public class CounterViewController : MonoBehaviour, IController
     {
         private ICountModel mCountModel;
         
         private void Start()
         {
-            mCountModel = CountApp.Get<ICountModel>();
+            mCountModel = GetArchitecture().GetModel<ICountModel>();
             
             // 添加委托
             mCountModel.Count.OnValueChanged += OnCountChanged;
@@ -21,15 +22,13 @@ namespace CountApp.Scripts
             transform.Find("AddButton").GetComponent<Button>().onClick.AddListener((() =>
             {
                 // 交互逻辑
-                new AddCountCommand()
-                    .Execute();
+                GetArchitecture().SendCommand<AddCountCommand>();
             }));
             
             transform.Find("SubButton").GetComponent<Button>().onClick.AddListener((() =>
             {
                 // 交互逻辑
-                new SubCountCommand()
-                    .Execute();
+                GetArchitecture().SendCommand<SubCountCommand>();
             }));
         }
 
@@ -44,6 +43,11 @@ namespace CountApp.Scripts
             mCountModel.Count.OnValueChanged -= OnCountChanged;
 
             mCountModel = null;
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return CountApp.Interface;
         }
     }
 }

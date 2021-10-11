@@ -3,9 +3,9 @@ using FrameworkDesign.Framework.Command;
 
 namespace FrameworkDesign.Example.Scripts.Command
 {
-    public struct GameStartCommand : ICommand
+    public class GameStartCommand : AbstractCommand
     {
-        public void Execute()
+        protected override void OnExecute()
         {
             GameStartEvent.Trigger();
         }

@@ -5,11 +5,11 @@ using FrameworkDesign.Example.Scripts.PointGame;
 
 namespace FrameworkDesign.Example.Scripts.Command
 {
-    public struct KillEnemyCommand : ICommand
+    public class KillEnemyCommand : AbstractCommand
     {
-        public void Execute()
+        protected override void OnExecute()
         {
-            var gameModel = PointGame.PointGame.Get<IGameModel>();
+            var gameModel = GetArchitecture().GetModel<IGameModel>();
             
             gameModel.KillCount.Value++;
 

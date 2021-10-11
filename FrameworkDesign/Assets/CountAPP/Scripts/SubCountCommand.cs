@@ -2,11 +2,11 @@
 
 namespace CountApp.Scripts
 {
-    public struct SubCountCommand : ICommand
+    public class SubCountCommand : AbstractCommand
     {
-        public void Execute()
+        protected override void OnExecute()
         {
-            CountApp.Get<ICountModel>().Count.Value--;
+            GetArchitecture().GetModel<ICountModel>().Count.Value--;
         }
     }
 }

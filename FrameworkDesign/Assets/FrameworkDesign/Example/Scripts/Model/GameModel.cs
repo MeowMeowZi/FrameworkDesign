@@ -1,8 +1,9 @@
+using FrameworkDesign.Framework.Architecture;
 using FrameworkDesign.Framework.BindableProperty;
 
 namespace FrameworkDesign.Example.Scripts.Model
 {
-    public interface IGameModel
+    public interface IGameModel : IModel
     {
         BindableProperty<int> KillCount { get; }
 
@@ -13,7 +14,7 @@ namespace FrameworkDesign.Example.Scripts.Model
         BindableProperty<int> BaseScore { get; }
     }
     
-    public class GameModel : IGameModel
+    public class GameModel : AbstractModel, IGameModel
     {
         public BindableProperty<int> KillCount { get; } = new BindableProperty<int>()
         {
@@ -34,5 +35,10 @@ namespace FrameworkDesign.Example.Scripts.Model
         {
             Value = 0
         };
+
+        protected override void OnInit()
+        {
+            
+        }
     }
 }

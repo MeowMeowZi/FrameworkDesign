@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using FrameworkDesign.Framework.IOC;
+using FrameworkDesign.Framework.Command;
 
 namespace FrameworkDesign.Framework.Architecture
 {
     public interface IArchitecture
     {
         void RegisterModel<T>(T model) where T : IModel;
-
-        void RegisterUtility<T>(T utility);
         
-        T GetUtility<T>() where T : class;
+        void RegisterSystem<T>(T system) where T : ISystem;
+
+        void RegisterUtility<T>(T utility) where T : IUtility;
+
+        T GetModel<T>() where T : class, IModel;
+        
+        T GetUtility<T>() where T : class, IUtility;
+
+        void SendCommand<T>() where T : ICommand, new();
+
+        void SendCommand<T>(T command) where T : ICommand;
     }
     
     public abstract class Architecture<T> : IArchitecture where T : Architecture<T>, new()
@@ -22,9 +31,24 @@ namespace FrameworkDesign.Framework.Architecture
 
         private List<IModel> mModels = new List<IModel>();
 
+        private List<ISystem> mSystems = new List<ISystem>();
+
         public static Action<T> OnRegisterPatch = architecture => { };
 
         private static T mArchitecture;
+
+        public static IArchitecture Interface
+        {
+            get
+            {
+                if (mArchitecture == null)
+                {
+                    MakeSureArchitecture();
+                }
+
+                return mArchitecture;
+            }
+        }
 
         static void MakeSureArchitecture()
         {
@@ -39,8 +63,14 @@ namespace FrameworkDesign.Framework.Architecture
                 {
                     architectureModel.Init();
                 }
-
                 mArchitecture.mModels.Clear();
+                
+                foreach (var architectureSystem in mArchitecture.mSystems)
+                {
+                    architectureSystem.Init();
+                }
+                mArchitecture.mSystems.Clear();
+                
                 mArchitecture.mInited = true;
             }
         }
@@ -63,9 +93,24 @@ namespace FrameworkDesign.Framework.Architecture
             mArchitecture.mContainer.Register<T>(instance);
         }
 
+        public void RegisterSystem<T>(T system) where T : ISystem
+        {
+            system.SetArchitecture(this);
+            mContainer.Register<T>(system);
+
+            if (!mInited)
+            {
+                mSystems.Add(system);
+            }
+            else
+            {
+                system.Init();
+            }
+        }
+
         public void RegisterModel<T>(T model) where T : IModel
         {
-            model.Architecture = this;
+            model.SetArchitecture(this);
             mContainer.Register<T>(model);
 
             if (!mInited)
@@ -78,14 +123,32 @@ namespace FrameworkDesign.Framework.Architecture
             }
         }
 
-        public void RegisterUtility<T>(T utility)
+        public void RegisterUtility<T>(T utility) where T : IUtility
         {
             mContainer.Register<T>(utility);
         }
 
-        public T GetUtility<T>() where T : class
+        public T GetModel<T>() where T : class, IModel
         {
             return mContainer.Get<T>();
+        }
+
+        public T GetUtility<T>() where T : class, IUtility
+        {
+            return mContainer.Get<T>();
+        }
+
+        public void SendCommand<T>() where T : ICommand, new()
+        {
+            var command = new T();
+            command.SetArchitecture(this);
+            command.Execute();
+        }
+
+        public void SendCommand<T>(T command) where T : ICommand
+        {
+            command.SetArchitecture(this);
+            command.Execute();
         }
     }
 }
