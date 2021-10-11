@@ -3,7 +3,7 @@ using FrameworkDesign.Framework.Event;
 
 namespace FrameworkDesign.Example.Scripts.Event
 {
-    public abstract class GamePassEvent : Event<GamePassEvent>
+    public abstract class GamePassEvent
     {
         
     }

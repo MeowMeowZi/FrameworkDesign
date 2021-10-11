@@ -1,6 +1,6 @@
 using FrameworkDesign.Example.Scripts.Command;
-using FrameworkDesign.Example.Scripts.Event;
 using FrameworkDesign.Framework.Architecture;
+using FrameworkDesign.Framework.Architecture.Rule;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,11 +13,11 @@ namespace FrameworkDesign.Example.Scripts.UI
             transform.Find("BtnStart").GetComponent<Button>().onClick.AddListener((() =>
             {
                 gameObject.SetActive(false);
-                GetArchitecture().SendCommand<GameStartCommand>();
+                this.SendCommand<GameStartCommand>();
             }));
         }
 
-        public IArchitecture GetArchitecture()
+        IArchitecture IBelongToArchitecture.GetArchitecture()
         {
             return PointGame.PointGame.Interface;
         }

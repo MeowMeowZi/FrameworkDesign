@@ -1,5 +1,6 @@
 using CountApp.Scripts;
 using FrameworkDesign.Framework.Architecture;
+using FrameworkDesign.Framework.Architecture.Rule;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,18 +27,18 @@ namespace Editor
         {
             if (GUILayout.Button("+"))
             {
-                GetArchitecture().SendCommand<AddCountCommand>();
+                this.SendCommand<AddCountCommand>();
             }
 
             GUILayout.Label(CountApp.Scripts.CountApp.Get<ICountModel>().Count.Value.ToString());
             
             if (GUILayout.Button("-"))
             {
-                GetArchitecture().SendCommand<SubCountCommand>();
+                this.SendCommand<SubCountCommand>();
             }
         }
 
-        public IArchitecture GetArchitecture()
+        IArchitecture IBelongToArchitecture.GetArchitecture()
         {
             return CountApp.Scripts.CountApp.Interface;
         }

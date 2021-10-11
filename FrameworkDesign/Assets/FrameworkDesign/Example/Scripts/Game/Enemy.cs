@@ -1,7 +1,6 @@
 using FrameworkDesign.Example.Scripts.Command;
-using FrameworkDesign.Example.Scripts.Event;
-using FrameworkDesign.Example.Scripts.Model;
 using FrameworkDesign.Framework.Architecture;
+using FrameworkDesign.Framework.Architecture.Rule;
 using UnityEngine;
 
 namespace FrameworkDesign.Example.Scripts.Game
@@ -12,10 +11,10 @@ namespace FrameworkDesign.Example.Scripts.Game
         {
             Destroy(gameObject);
             
-            GetArchitecture().SendCommand<KillEnemyCommand>();
+            this.SendCommand<KillEnemyCommand>();
         }
 
-        public IArchitecture GetArchitecture()
+        IArchitecture IBelongToArchitecture.GetArchitecture()
         {
             return PointGame.PointGame.Interface;
         }

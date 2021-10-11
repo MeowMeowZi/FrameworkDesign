@@ -1,4 +1,5 @@
 ﻿using FrameworkDesign.Example.Scripts.Event;
+using FrameworkDesign.Framework.Architecture.Rule;
 using FrameworkDesign.Framework.Command;
 
 namespace FrameworkDesign.Example.Scripts.Command
@@ -7,7 +8,7 @@ namespace FrameworkDesign.Example.Scripts.Command
     {
         protected override void OnExecute()
         {
-            GameStartEvent.Trigger();
+            this.SendEvent<GameStartEvent>();
         }
     }
 }

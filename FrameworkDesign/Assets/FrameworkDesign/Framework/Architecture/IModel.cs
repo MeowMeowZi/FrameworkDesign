@@ -1,6 +1,8 @@
-﻿namespace FrameworkDesign.Framework.Architecture
+﻿using FrameworkDesign.Framework.Architecture.Rule;
+
+namespace FrameworkDesign.Framework.Architecture
 {
-    public interface IModel : IBelongToArchitecture, ICanSetArchitecture
+    public interface IModel : IBelongToArchitecture, ICanSetArchitecture, ICanGetUtility, ICanSendEvent
 
     {
     void Init();
@@ -10,12 +12,12 @@
     {
         private IArchitecture mArchitecture;
         
-        public IArchitecture GetArchitecture()
+        IArchitecture IBelongToArchitecture.GetArchitecture()
         {
             return mArchitecture;
         }
 
-        public void SetArchitecture(IArchitecture architecture)
+        void ICanSetArchitecture.SetArchitecture(IArchitecture architecture)
         {
             mArchitecture = architecture;
         }

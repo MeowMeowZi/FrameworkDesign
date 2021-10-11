@@ -1,24 +1,31 @@
 ﻿using System;
 using FrameworkDesign.Example.Scripts.Event;
+using FrameworkDesign.Framework.Architecture;
+using FrameworkDesign.Framework.Architecture.Rule;
 using UnityEngine;
 
 namespace FrameworkDesign.Example.Scripts.UI
 {
-    public class UI : MonoBehaviour
+    public class UI : MonoBehaviour, IController
     {
         private void Awake()
         {
-            GamePassEvent.Register(OnGamePass);
+            this.RegisterEvent<GamePassEvent>(OnGamePass);
         }
 
-        private void OnGamePass()
+        private void OnGamePass(GamePassEvent e)
         {
             transform.Find("Canvas/GamePassPanel").gameObject.SetActive(true);
         }
 
         private void OnDestroy()
         {
-            GamePassEvent.UnRegister(OnGamePass);
+            this.Unregister<GamePassEvent>(OnGamePass);
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return PointGame.PointGame.Interface;
         }
     }
 }

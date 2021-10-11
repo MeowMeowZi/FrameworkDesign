@@ -1,8 +1,9 @@
 using FrameworkDesign.Framework.Architecture;
+using FrameworkDesign.Framework.Architecture.Rule;
 
 namespace FrameworkDesign.Framework.Command
 {
-    public interface ICommand : IBelongToArchitecture, ICanSetArchitecture
+    public interface ICommand : IBelongToArchitecture, ICanSetArchitecture, ICanGetSystem, ICanGetModel, ICanGetUtility, ICanSendEvent, ICanSendCommand
     {
         void Execute();
     }
@@ -11,12 +12,12 @@ namespace FrameworkDesign.Framework.Command
     {
         private IArchitecture mArchitecture;
         
-        public IArchitecture GetArchitecture()
+        IArchitecture IBelongToArchitecture.GetArchitecture()
         {
             return mArchitecture;
         }
 
-        public void SetArchitecture(IArchitecture architecture)
+        void ICanSetArchitecture.SetArchitecture(IArchitecture architecture)
         {
             mArchitecture = architecture;
         }

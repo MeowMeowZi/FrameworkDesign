@@ -1,4 +1,5 @@
 ﻿using FrameworkDesign.Framework.Architecture;
+using FrameworkDesign.Framework.Architecture.Rule;
 using UnityEngine;
 
 namespace CountApp.Scripts
@@ -12,7 +13,7 @@ namespace CountApp.Scripts
     {
         protected override void OnInit()
         {
-            var countMoudel = GetArchitecture().GetModel<ICountModel>();;
+            var countMoudel = this.GetModel<ICountModel>();;
 
             var previousCount = countMoudel.Count.Value;
 

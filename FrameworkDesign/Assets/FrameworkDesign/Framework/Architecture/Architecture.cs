@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FrameworkDesign.Framework.IOC;
 using FrameworkDesign.Framework.Command;
+using FrameworkDesign.Framework.Event;
 
 namespace FrameworkDesign.Framework.Architecture
 {
@@ -13,6 +14,8 @@ namespace FrameworkDesign.Framework.Architecture
 
         void RegisterUtility<T>(T utility) where T : IUtility;
 
+        T GetSystem<T>() where T : class, ISystem;
+
         T GetModel<T>() where T : class, IModel;
         
         T GetUtility<T>() where T : class, IUtility;
@@ -20,6 +23,14 @@ namespace FrameworkDesign.Framework.Architecture
         void SendCommand<T>() where T : ICommand, new();
 
         void SendCommand<T>(T command) where T : ICommand;
+
+        void SendEvent<T>() where T : new();
+
+        void SendEvent<T>(T e);
+
+        IUnregister RegisterEvent<T>(Action<T> onEvnet);
+
+        void UnregisterEvent<T>(Action<T> onEvent);
     }
     
     public abstract class Architecture<T> : IArchitecture where T : Architecture<T>, new()
@@ -128,6 +139,11 @@ namespace FrameworkDesign.Framework.Architecture
             mContainer.Register<T>(utility);
         }
 
+        public T GetSystem<T>() where T : class, ISystem
+        {
+            return mContainer.Get<T>();
+        }
+
         public T GetModel<T>() where T : class, IModel
         {
             return mContainer.Get<T>();
@@ -149,6 +165,28 @@ namespace FrameworkDesign.Framework.Architecture
         {
             command.SetArchitecture(this);
             command.Execute();
+        }
+
+        private ITypeEventSystem mTypeEventSystem = new TypeEventSystem();
+        
+        public void SendEvent<T>() where T : new()
+        {
+            mTypeEventSystem.Send<T>();
+        }
+
+        public void SendEvent<T>(T e)
+        {
+            mTypeEventSystem.Send<T>(e);
+        }
+
+        public IUnregister RegisterEvent<T>(Action<T> onEvnet)
+        {
+            return mTypeEventSystem.Register<T>(onEvnet);
+        }
+
+        public void UnregisterEvent<T>(Action<T> onEvent)
+        {
+            mTypeEventSystem.Unregister<T>(onEvent);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using FrameworkDesign.Example.Scripts.Event;
 using FrameworkDesign.Example.Scripts.Model;
 using FrameworkDesign.Framework.Command;
-using FrameworkDesign.Example.Scripts.PointGame;
+using FrameworkDesign.Framework.Architecture.Rule;
 
 namespace FrameworkDesign.Example.Scripts.Command
 {
@@ -9,13 +9,13 @@ namespace FrameworkDesign.Example.Scripts.Command
     {
         protected override void OnExecute()
         {
-            var gameModel = GetArchitecture().GetModel<IGameModel>();
+            var gameModel = this.GetModel<IGameModel>();
             
             gameModel.KillCount.Value++;
 
             if (gameModel.KillCount.Value == 10)
             {
-                GamePassEvent.Trigger();
+                this.SendEvent<GamePassEvent>();
             }
         }
     }

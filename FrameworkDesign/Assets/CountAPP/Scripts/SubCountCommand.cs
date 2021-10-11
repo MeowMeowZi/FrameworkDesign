@@ -1,4 +1,5 @@
-﻿using FrameworkDesign.Framework.Command;
+﻿using FrameworkDesign.Framework.Architecture.Rule;
+using FrameworkDesign.Framework.Command;
 
 namespace CountApp.Scripts
 {
@@ -6,7 +7,7 @@ namespace CountApp.Scripts
     {
         protected override void OnExecute()
         {
-            GetArchitecture().GetModel<ICountModel>().Count.Value--;
+            this.GetModel<ICountModel>().Count.Value--;
         }
     }
 }
