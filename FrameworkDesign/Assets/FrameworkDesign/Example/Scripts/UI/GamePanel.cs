@@ -1,6 +1,5 @@
-using System;
-using FrameworkDesign.Example.Scripts.Command;
 using FrameworkDesign.Example.Scripts.Model;
+using FrameworkDesign.Example.Scripts.System;
 using FrameworkDesign.Framework.Architecture;
 using FrameworkDesign.Framework.Architecture.Rule;
 using UnityEngine;
@@ -8,32 +7,24 @@ using UnityEngine.UI;
 
 namespace FrameworkDesign.Example.Scripts.UI
 {
-    public class GameStartPanel : MonoBehaviour, IController
+    public class GamePanel : MonoBehaviour, IController
     {
+        private ICountDownSystem mCountDownSystem;
         private IGameModel mGameModel;
         
-        void Start()
+        private void Awake()
         {
-            transform.Find("BtnStart").GetComponent<Button>().onClick.AddListener((() =>
-            {
-                gameObject.SetActive(false);
-                this.SendCommand<GameStartCommand>();
-            }));
-            
-            transform.Find("BtnBuyLife").GetComponent<Button>().onClick.AddListener((() =>
-            {
-                this.SendCommand<BuyLifeCommand>();
-            }));
+            mCountDownSystem = this.GetSystem<ICountDownSystem>();
 
             mGameModel = this.GetModel<IGameModel>();
 
-            mGameModel.Life.RegisterOnValueChanged(OnLifeValueChanged);
             mGameModel.Gold.RegisterOnValueChanged(OnGoldValueChanged);
+            mGameModel.Life.RegisterOnValueChanged(OnLifeValueChanged);
+            mGameModel.Score.RegisterOnValueChanged(OnScoreValueChanged);
 
-            OnLifeValueChanged(mGameModel.Life.Value);
             OnGoldValueChanged(mGameModel.Gold.Value);
-
-            transform.Find("BestScoreText").GetComponent<Text>().text = $"最高分: {mGameModel.Score.Value}";
+            OnLifeValueChanged(mGameModel.Life.Value);
+            OnScoreValueChanged(mGameModel.Score.Value);
         }
 
         private void OnLifeValueChanged(int life)
@@ -43,19 +34,33 @@ namespace FrameworkDesign.Example.Scripts.UI
 
         private void OnGoldValueChanged(int gold)
         {
-            transform.Find("BtnBuyLife").gameObject.SetActive(gold > 0);
-
             transform.Find("GoldText").GetComponent<Text>().text = $"金币: {mGameModel.Gold.Value}";
+        }
+
+        private void OnScoreValueChanged(int score)
+        {
+            transform.Find("ScoreText").GetComponent<Text>().text = $"分数: {mGameModel.Score.Value}";
+        }
+
+        private void Update()
+        {
+            if (Time.frameCount % 20 == 0)
+            {
+                transform.Find("CountDownText").GetComponent<Text>().text =
+                    $"{mCountDownSystem.CurrentRemainSeconds} S";
+            }
         }
 
         private void OnDestroy()
         {
             mGameModel.Gold.UnregisterOnValueChanged(OnGoldValueChanged);
             mGameModel.Life.UnregisterOnValueChanged(OnLifeValueChanged);
+            mGameModel.Score.UnregisterOnValueChanged(OnScoreValueChanged);
             mGameModel = null;
+            mCountDownSystem = null;
         }
 
-        IArchitecture IBelongToArchitecture.GetArchitecture()
+        public IArchitecture GetArchitecture()
         {
             return PointGame.PointGame.Interface;
         }

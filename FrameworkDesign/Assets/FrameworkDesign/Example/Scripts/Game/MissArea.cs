@@ -1,3 +1,4 @@
+using System;
 using FrameworkDesign.Example.Scripts.Command;
 using FrameworkDesign.Framework.Architecture;
 using FrameworkDesign.Framework.Architecture.Rule;
@@ -5,16 +6,14 @@ using UnityEngine;
 
 namespace FrameworkDesign.Example.Scripts.Game
 {
-    public class Enemy : MonoBehaviour, IController
+    public class MissArea : MonoBehaviour, IController
     {
         private void OnMouseDown()
         {
-            gameObject.SetActive(false);
-            
-            this.SendCommand<KillEnemyCommand>();
+            this.SendCommand<MissCommand>();
         }
 
-        IArchitecture IBelongToArchitecture.GetArchitecture()
+        public IArchitecture GetArchitecture()
         {
             return PointGame.PointGame.Interface;
         }

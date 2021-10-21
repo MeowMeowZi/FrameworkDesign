@@ -2,12 +2,12 @@ using FrameworkDesign.Framework.Architecture.Rule;
 
 namespace FrameworkDesign.Framework.Architecture
 {
-    public interface ISystem : IBelongToArchitecture, ICanSetArchitecture, ICanGetModel, ICanGetUtility, ICanRegisterEvent, ICanSendEvent
+    public interface ISystem : IBelongToArchitecture, ICanSetArchitecture, ICanGetModel, ICanGetUtility, ICanRegisterEvent, ICanSendEvent, ICanGetSystem
     {
         void Init();
     }
     
-    public abstract class AsbtractSystem : ISystem
+    public abstract class AbstractSystem : ISystem
     {
         private IArchitecture mArchitecture;
         

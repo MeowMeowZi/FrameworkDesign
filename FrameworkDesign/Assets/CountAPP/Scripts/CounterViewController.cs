@@ -14,10 +14,10 @@ namespace CountApp.Scripts
             mCountModel = this.GetModel<ICountModel>();
             
             // 添加委托
-            mCountModel.Count.OnValueChanged += OnCountChanged;
+            mCountModel.Count.RegisterOnValueChanged(OnCountChanged);
             
             // 表现逻辑 -- 初始化
-            mCountModel.Count.OnValueChanged?.Invoke(mCountModel.Count.Value);
+            OnCountChanged(mCountModel.Count.Value);
             
             transform.Find("AddButton").GetComponent<Button>().onClick.AddListener((() =>
             {
@@ -40,7 +40,7 @@ namespace CountApp.Scripts
 
         private void OnDestroy()
         {
-            mCountModel.Count.OnValueChanged -= OnCountChanged;
+            mCountModel.Count.UnregisterOnValueChanged(OnCountChanged);
 
             mCountModel = null;
         }

@@ -9,7 +9,7 @@ namespace CountApp.Scripts
         
     }
     
-    public class AchievementSystem : AsbtractSystem, IAchievementSystem
+    public class AchievementSystem : AbstractSystem, IAchievementSystem
     {
         protected override void OnInit()
         {
@@ -17,7 +17,7 @@ namespace CountApp.Scripts
 
             var previousCount = countMoudel.Count.Value;
 
-            countMoudel.Count.OnValueChanged += newCount =>
+            countMoudel.Count.RegisterOnValueChanged(newCount =>
             {
                 if (previousCount < 10 && newCount >= 10)
                 {
@@ -29,7 +29,7 @@ namespace CountApp.Scripts
                 }
 
                 previousCount = newCount;
-            };
+            });
         }
     }
 }

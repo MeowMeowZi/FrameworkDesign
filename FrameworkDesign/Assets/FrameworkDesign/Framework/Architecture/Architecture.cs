@@ -90,20 +90,6 @@ namespace FrameworkDesign.Framework.Architecture
 
         private IOCContainer mContainer = new IOCContainer();
         
-        public static T Get<T>() where T : class
-        {
-            MakeSureArchitecture();
-            
-            return mArchitecture.mContainer.Get<T>();
-        }
-
-        public static void Register<T>(T instance)
-        {
-            MakeSureArchitecture();
-            
-            mArchitecture.mContainer.Register<T>(instance);
-        }
-
         public void RegisterSystem<T>(T system) where T : ISystem
         {
             system.SetArchitecture(this);

@@ -1,4 +1,6 @@
+using FrameworkDesign.Example.Scripts.Utility;
 using FrameworkDesign.Framework.Architecture;
+using FrameworkDesign.Framework.Architecture.Rule;
 using FrameworkDesign.Framework.BindableProperty;
 
 namespace FrameworkDesign.Example.Scripts.Model
@@ -11,7 +13,9 @@ namespace FrameworkDesign.Example.Scripts.Model
 
         BindableProperty<int> Score { get; }
 
-        BindableProperty<int> BaseScore { get; }
+        BindableProperty<int> BestScore { get; }
+        
+        BindableProperty<int> Life { get; }
     }
     
     public class GameModel : AbstractModel, IGameModel
@@ -31,14 +35,28 @@ namespace FrameworkDesign.Example.Scripts.Model
             Value = 0
         };
 
-        public BindableProperty<int> BaseScore { get; } = new BindableProperty<int>()
+        public BindableProperty<int> BestScore { get; } = new BindableProperty<int>()
         {
             Value = 0
         };
 
+        public BindableProperty<int> Life { get; } = new BindableProperty<int>()
+        {
+            Value = 3
+        };
+
         protected override void OnInit()
         {
-            
+            var storage = this.GetUtility<IStorage>();
+
+            BestScore.Value = storage.LoadInt(nameof(BestScore), 0);
+            BestScore.RegisterOnValueChanged(v => storage.SaveInt(nameof(BestScore), v));
+
+            Life.Value = storage.LoadInt(nameof(Life), 3);
+            Life.RegisterOnValueChanged(v => storage.SaveInt(nameof(Life), v));
+
+            Gold.Value = storage.LoadInt(nameof(Gold), 0);
+            Gold.RegisterOnValueChanged(v => storage.SaveInt(nameof(Gold), v));
         }
     }
 }

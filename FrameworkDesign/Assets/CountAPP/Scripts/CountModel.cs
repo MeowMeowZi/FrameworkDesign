@@ -18,10 +18,10 @@ namespace CountApp.Scripts
 
             Count.Value = storage.LoadInt("COUNTER_COUNT", 0);
 
-            Count.OnValueChanged += count =>
+            Count.RegisterOnValueChanged(count =>
             {
                 storage.SaveInt("COUNTER_COUNT", count);
-            };
+            });
         }
 
         public BindableProperty<int> Count { get; } = new BindableProperty<int>()

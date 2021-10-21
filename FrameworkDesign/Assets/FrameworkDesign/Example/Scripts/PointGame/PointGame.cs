@@ -1,6 +1,7 @@
 ﻿using FrameworkDesign.Example.Scripts.Model;
+using FrameworkDesign.Example.Scripts.System;
+using FrameworkDesign.Example.Scripts.Utility;
 using FrameworkDesign.Framework.Architecture;
-using FrameworkDesign.Framework.IOC;
 
 namespace FrameworkDesign.Example.Scripts.PointGame
 {
@@ -8,7 +9,15 @@ namespace FrameworkDesign.Example.Scripts.PointGame
     {
         protected override void Init()
         {
-            Register<IGameModel>(new GameModel());
+            RegisterSystem<ICountDownSystem>(new CountDownSystem());
+
+            RegisterSystem<IAchievementSystem>(new AchievementSystem());
+            
+            RegisterSystem<IScoreSystem>(new ScoreSystem());
+            
+            RegisterModel<IGameModel>(new GameModel());
+
+            RegisterUtility<IStorage>(new PlayerPrefsStorage());
         }
     }
 }

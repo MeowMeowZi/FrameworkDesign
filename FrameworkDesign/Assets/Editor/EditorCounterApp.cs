@@ -30,7 +30,7 @@ namespace Editor
                 this.SendCommand<AddCountCommand>();
             }
 
-            GUILayout.Label(CountApp.Scripts.CountApp.Get<ICountModel>().Count.Value.ToString());
+            GUILayout.Label(CountApp.Scripts.CountApp.Interface.GetModel<ICountModel>().Count.Value.ToString());
             
             if (GUILayout.Button("-"))
             {
